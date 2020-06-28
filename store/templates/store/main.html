@@ -22,7 +22,26 @@
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+		var user = '{{request.user}}'
+		function getToken(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        var cookies = document.cookie.split(';');
+		        for (var i = 0; i < cookies.length; i++) {
+		            var cookie = cookies[i].trim();
+		            // Does this cookie string begin with the name we want?
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken')
+	</script>
+
 
 </head>
 
@@ -112,7 +131,8 @@
                                 </form>
                             </div>
                             <div class="mini_cart_wrapper">
-                                <a href="javascript:void(0)"><i class="zmdi zmdi-shopping-basket"></i> <span>2items - $213.00</span> </a>
+                                <a href="javascript:void(0)"><i class="zmdi zmdi-shopping-basket"></i>
+                                    <span>{{cartItems}} items - $213.00</span> </a>
                                 <!--mini cart-->
                                  <div class="mini_cart">
                                     <div class="cart_item">
